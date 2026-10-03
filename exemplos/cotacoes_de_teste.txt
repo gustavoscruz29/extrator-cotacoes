@@ -1,0 +1,5 @@
+Exemplo 1:
+Olá, segue cotação: 50 caixas de papel A4, R$ 18,90 cada, entrega em 5 dias úteis, pagamento em 30 dias. Atenciosamente, Papelaria Central.
+
+Exemplo 2:
+Prezados, para as 200 canetas esferográficas azuis conseguimos R$ 1,25 a unidade. Entregamos em até 10 dias e aceitamos boleto à vista. Abs, Distribuidora Alfa.

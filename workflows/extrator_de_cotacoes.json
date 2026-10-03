@@ -6,11 +6,11 @@
       "type": "n8n-nodes-base.manualTrigger",
       "typeVersion": 1,
       "position": [
-        -240,
+        -192,
         -48
       ],
       "id": "c5ba1945-c9e6-4b78-97d9-52a7f5039c26",
-      "name": "When clicking ‘Execute workflow’"
+      "name": "Iniciar manualmente"
     },
     {
       "parameters": {
@@ -19,7 +19,7 @@
             {
               "id": "b098af9d-599e-4f7a-9e70-b5536c3d4f0c",
               "name": "texto_cotacao",
-              "value": "Olá, segue cotação: 50 caixas de papel A4, R$ 18,90 cada, entrega em 5 dias úteis, pagamento em 30 dias. Atenciosamente, Papelaria Central.",
+              "value": "Prezados, para as 200 canetas esferográficas azuis conseguimos R$ 1,25 a unidade. Entregamos em até 10 dias e aceitamos boleto à vista. Abs, Distribuidora Alfa.",
               "type": "string"
             }
           ]
@@ -33,7 +33,7 @@
         -48
       ],
       "id": "527d3c52-1a4c-4338-a6e2-9f7f18acedb9",
-      "name": "Edit Fields"
+      "name": "texto da cotação"
     },
     {
       "parameters": {
@@ -59,7 +59,7 @@
         -48
       ],
       "id": "cc3275c0-8062-4a2c-af1e-ea5b1535f693",
-      "name": "Message a model",
+      "name": "Extrair dados com Gemini",
       "credentials": {
         "googlePalmApi": {
           "id": "VxCou0EqAQq3WrwB",
@@ -78,38 +78,69 @@
         -48
       ],
       "id": "137376b7-cc8c-4b2b-92ec-b57a268801aa",
-      "name": "Code in JavaScript"
+      "name": "Converter em campos"
+    },
+    {
+      "parameters": {
+        "tableId": "cotacoes",
+        "dataToSend": "autoMapInputData"
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        608,
+        -48
+      ],
+      "id": "7f4e89c6-1652-49bb-94fc-4820e2c888e9",
+      "name": "Salvar no Supabase",
+      "credentials": {
+        "supabaseApi": {
+          "id": "VXir2CxzzsxRQu35",
+          "name": "Supabase account"
+        }
+      }
     }
   ],
   "pinData": {},
   "connections": {
-    "When clicking ‘Execute workflow’": {
+    "Iniciar manualmente": {
       "main": [
         [
           {
-            "node": "Edit Fields",
+            "node": "texto da cotação",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Edit Fields": {
+    "texto da cotação": {
       "main": [
         [
           {
-            "node": "Message a model",
+            "node": "Extrair dados com Gemini",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Message a model": {
+    "Extrair dados com Gemini": {
       "main": [
         [
           {
-            "node": "Code in JavaScript",
+            "node": "Converter em campos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Converter em campos": {
+      "main": [
+        [
+          {
+            "node": "Salvar no Supabase",
             "type": "main",
             "index": 0
           }
@@ -123,7 +154,7 @@
     "binaryMode": "separate",
     "availableInMCP": false
   },
-  "versionId": "4504f521-fa8e-442c-b506-8ac1c320210c",
+  "versionId": "f40df59f-c088-4201-b1ef-3d2f65d36913",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "53c47e402c58a41ac623f49adedcd1cbfdc9aa2d2498a4a31ccc78599f0a1c08"
