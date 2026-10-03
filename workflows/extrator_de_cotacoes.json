@@ -6,8 +6,8 @@
       "type": "n8n-nodes-base.manualTrigger",
       "typeVersion": 1,
       "position": [
-        0,
-        0
+        -240,
+        -48
       ],
       "id": "c5ba1945-c9e6-4b78-97d9-52a7f5039c26",
       "name": "When clicking ‘Execute workflow’"
@@ -29,11 +29,56 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.5,
       "position": [
-        224,
-        0
+        -16,
+        -48
       ],
       "id": "527d3c52-1a4c-4338-a6e2-9f7f18acedb9",
       "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "models/gemini-3-flash-preview"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=Você é um assistente que extrai dados de cotações de fornecedores.\nLeia o texto abaixo e responda SOMENTE com um JSON válido, sem texto antes ou depois e sem blocos de código, com estes campos:\nfornecedor (texto), item (texto), quantidade (número), preco_unitario (número, em reais), prazo_entrega_dias (número), condicao_pagamento (texto).\nSe algum dado não aparecer no texto, use null.\n\nTexto da cotação:\n{{ $json.texto_cotacao }}"
+            }
+          ]
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1.2,
+      "position": [
+        144,
+        -48
+      ],
+      "id": "cc3275c0-8062-4a2c-af1e-ea5b1535f693",
+      "name": "Message a model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "VxCou0EqAQq3WrwB",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const partes = $input.first().json.content.parts;\nconst bruto = partes.find(p => p.text).text;\nconst limpo = bruto.replace(/```json|```/g, '').trim();\nreturn [{ json: JSON.parse(limpo) }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        432,
+        -48
+      ],
+      "id": "137376b7-cc8c-4b2b-92ec-b57a268801aa",
+      "name": "Code in JavaScript"
     }
   ],
   "pinData": {},
@@ -48,15 +93,39 @@
           }
         ]
       ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Message a model",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Message a model": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "active": false,
   "settings": {
     "executionOrder": "v1",
-    "binaryMode": "separate"
+    "binaryMode": "separate",
+    "availableInMCP": false
   },
-  "versionId": "5e1cd1c5-c5d5-4b61-8646-bfb21a3ddad2",
+  "versionId": "4504f521-fa8e-442c-b506-8ac1c320210c",
   "meta": {
+    "templateCredsSetupCompleted": true,
     "instanceId": "53c47e402c58a41ac623f49adedcd1cbfdc9aa2d2498a4a31ccc78599f0a1c08"
   },
   "nodeGroups": [],
