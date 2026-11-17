@@ -85,7 +85,6 @@ A tabela `cotacoes` é criada por [`sql/01_criar_tabela_cotacoes.sql`](sql/01_cr
 
 ## O que aprendi
 
-> Revise esta seção e reescreva com suas palavras antes de publicar.
 
 - Montar um fluxo de automação com nós e passar dados de um nó para o outro.
 - Pedir ao LLM uma saída estruturada em JSON e tratar a resposta antes de usá-la.
